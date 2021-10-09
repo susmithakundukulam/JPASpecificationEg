@@ -28,4 +28,10 @@ public interface EmployeeController {
 	
 	@PostMapping("getAllEmployeesQuery3")
 	public ResponseEntity getAllEmployeesQuery3(@RequestBody EmployeeDto empDto) ;
+	
+	@PostMapping("getAllEmployeesByName")
+	public ResponseEntity getAllEmployeesByName() ;
+	
+	@PostMapping("getAllEmployeesSpec")
+	public ResponseEntity getAllEmployeesSpec() ;
 }

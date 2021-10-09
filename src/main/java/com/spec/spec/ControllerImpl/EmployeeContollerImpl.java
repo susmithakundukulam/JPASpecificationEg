@@ -12,6 +12,7 @@ import com.spec.spec.Service.EmployeeService;
 import com.spec.spec.dto.EmployeeDto;
 import com.spec.spec.dto.MessageHandler;
 import com.spec.spec.dto.ResponseHandler;
+import com.spec.spec.model.Employee;
 
 @Controller
 public class EmployeeContollerImpl implements EmployeeController{
@@ -76,6 +77,30 @@ public class EmployeeContollerImpl implements EmployeeController{
 			responseHandler = new ResponseHandler(MessageHandler.FAILED);
 		}else {
 			responseHandler  = new ResponseHandler(empList);
+		}
+		return new ResponseEntity(responseHandler, HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity getAllEmployeesByName() {
+		ResponseHandler responseHandler = new ResponseHandler();
+		List<EmployeeDto> empList = empService.getAllEmployeeByName();
+		if(empList.isEmpty()) {
+			responseHandler = new ResponseHandler(MessageHandler.FAILED);
+		}else {
+			responseHandler  = new ResponseHandler(empList);
+		}
+		return new ResponseEntity(responseHandler, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity getAllEmployeesSpec() {
+		ResponseHandler responseHandler = new ResponseHandler();
+		List<EmployeeDto> emp = empService.getEmployeeSpec();
+		if(emp.equals(null)) {
+			responseHandler = new ResponseHandler(MessageHandler.FAILED);
+		}else {
+			responseHandler = new ResponseHandler(emp);
 		}
 		return new ResponseEntity(responseHandler, HttpStatus.OK);
 	}

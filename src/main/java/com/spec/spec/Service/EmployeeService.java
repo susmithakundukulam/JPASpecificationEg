@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spec.spec.DAO.EmployeeDAO;
+import com.spec.spec.DAOImpl.EmployeeHandler;
 import com.spec.spec.dto.EmployeeDto;
 import com.spec.spec.model.Employee;
 import com.spec.spec.utils.GeneralUtils;
@@ -19,6 +20,9 @@ public class EmployeeService {
 	
 	@Autowired
 	private GeneralUtils generalUtils;
+	
+	@Autowired
+	private EmployeeHandler employeeHandler;
 	
 	public List<EmployeeDto> getAllEmployee(){
 		 List<Employee> empEntityList = employeeDAO.findAll();
@@ -41,7 +45,7 @@ public class EmployeeService {
 	
 	public List<EmployeeDto> getAllEmployeeQuery1(){
 		List<EmployeeDto> empDtoList =new ArrayList<EmployeeDto>();
-		List<Employee> empList = employeeDAO.findAllQuery1(3);
+		List<Employee> empList = employeeDAO.findAllByFirstName("will");//findAllQuery1(3);
 		for(Employee emp: empList){
 			empDtoList.add(generalUtils.map(emp, EmployeeDto.class));
 		}
@@ -73,4 +77,23 @@ public class EmployeeService {
 		}
 		return empDtoList;
 	}
+	
+	public List<EmployeeDto> getAllEmployeeByName(){
+		List<EmployeeDto> empDtoList =new ArrayList<EmployeeDto>();
+		List<Employee> empList = employeeDAO.findAllByFirstName("will");//findAllQuery1(3);
+		for(Employee emp: empList){
+			empDtoList.add(generalUtils.map(emp, EmployeeDto.class));
+		}
+		return empDtoList;
+	}
+	
+	public List<EmployeeDto> getEmployeeSpec(){
+		List<EmployeeDto> empDtoList =new ArrayList<EmployeeDto>();
+		List<Employee> empList = employeeHandler.findAllBySpec("will", 2);//findAllQuery1(3);
+		for(Employee emp: empList){
+			empDtoList.add(generalUtils.map(emp, EmployeeDto.class));
+		}
+		return empDtoList;
+	}
+	
 }
