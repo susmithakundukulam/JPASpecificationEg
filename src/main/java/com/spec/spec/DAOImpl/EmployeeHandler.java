@@ -3,6 +3,9 @@ package com.spec.spec.DAOImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -33,7 +36,7 @@ public class EmployeeHandler {
 		List<Employee> empList = new ArrayList<Employee>();
 
 		List<Specifications> specifications = new ArrayList<Specifications>();
-		
+		 
 		employeeDAO.findAll(Specification.where((root, query, builder)->{
 			if(id != 0) {
 				specifications.add(new Specifications("id", id , "=", root, "or"));
@@ -41,6 +44,9 @@ public class EmployeeHandler {
 			if(firstName != null) {
 				specifications.add(new Specifications("firstName", "%"+firstName , "%", root, "or"));
 			}
+			// Table join example
+			//final Join<Employee, EmployeeDetailEntity> empJoin = querySpecification.makeJoin(root, new Employee(), new EmployeeDetailEntity(), "id", JoinType.INNER);
+			query.orderBy(builder.desc(root.get("id"))); //asc or desc based on id if required
 			return querySpecification.makeBuilder(querySpecification.search(specifications, builder), builder);
 		})).forEach((emp)->{
 			empList.add(emp);
